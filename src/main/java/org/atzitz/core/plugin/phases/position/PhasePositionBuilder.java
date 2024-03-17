@@ -6,7 +6,6 @@ public class PhasePositionBuilder {
     private int priority = 1;
     private boolean isFirst = false;
     private Class<? extends IPhase> after = null;
-    private Class<? extends IPhase> before = null;
     private Class<? extends IPhase> during = null;
     private boolean firstTurn = false;
     private boolean firstNight = false;
@@ -23,11 +22,6 @@ public class PhasePositionBuilder {
 
     public PhasePositionBuilder after(Class<? extends IPhase> after) {
         this.after = after;
-        return this;
-    }
-
-    public PhasePositionBuilder before(Class<? extends IPhase> before) {
-        this.before = before;
         return this;
     }
 
@@ -48,7 +42,7 @@ public class PhasePositionBuilder {
 
 
     public PhasePosition build() {
-        return new PhasePosition(priority, isFirst, after, before, during, firstTurn, firstNight);
+        return new PhasePosition(priority, isFirst, after, during, firstTurn, firstNight);
     }
 
 }

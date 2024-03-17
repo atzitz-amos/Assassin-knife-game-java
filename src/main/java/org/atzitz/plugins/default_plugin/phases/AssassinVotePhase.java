@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class AssassinVotePhase implements IPhase {
     private final PhasePosition position = new PhasePositionBuilder()
             .during(NightPhase.class)
+            .setAsFirst()
             .build();
 
     @Override

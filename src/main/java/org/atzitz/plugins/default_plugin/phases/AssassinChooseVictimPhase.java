@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class AssassinChooseVictimPhase implements IPhase {
     private final PhasePosition position = new PhasePositionBuilder()
             .during(NightPhase.class)
+            .after(AssassinVotePhase.class)
             .build();
 
     @Override
