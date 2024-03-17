@@ -23,7 +23,7 @@ public class PhaseTreeNode {
 
     public void setNext(PhaseTreeNode next) {
         this.next = next;
-        next.before = this;
+        if (next != null) next.before = this;
     }
 
     public IPhase get(AbstractContext context) {
