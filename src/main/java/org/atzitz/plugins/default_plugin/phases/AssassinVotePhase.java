@@ -1,6 +1,6 @@
 package org.atzitz.plugins.default_plugin.phases;
 
-import org.atzitz.core.plugin.context.AbstractContext;
+import org.atzitz.core.plugin.context.IContext;
 import org.atzitz.core.plugin.phases.IPhase;
 import org.atzitz.core.plugin.phases.position.PhasePosition;
 import org.atzitz.core.plugin.phases.position.PhasePositionBuilder;
@@ -29,7 +29,12 @@ public class AssassinVotePhase implements IPhase {
     }
 
     @Override
-    public boolean shouldShow(AbstractContext context) {
-        return IPhase.super.shouldShow(context);
+    public boolean shouldShow(IContext context) {
+        return context.isAssassin();
+    }
+
+    @Override
+    public int getDuration() {
+        return 5;
     }
 }

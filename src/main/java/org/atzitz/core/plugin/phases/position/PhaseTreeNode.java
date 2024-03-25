@@ -10,7 +10,7 @@ import java.util.Objects;
 @Getter
 public class PhaseTreeNode {
     private final IPhase phase;
-    private @Setter List<PhaseTreeNode> sideNodes;
+    private @Setter List<PhaseTreeNode> sideNodes = null;
     private PhaseTreeNode next;
     private PhaseTreeNode before;
 
@@ -36,4 +36,11 @@ public class PhaseTreeNode {
         return (phase != null ? phase.getClass().getSimpleName() : "null") + "->" + next;
     }
 
+    public boolean isMultiple() {
+        return sideNodes != null;
+    }
+
+    public PhasePosition getPhasePosition() {
+        return phase.getPhasePosition();
+    }
 }

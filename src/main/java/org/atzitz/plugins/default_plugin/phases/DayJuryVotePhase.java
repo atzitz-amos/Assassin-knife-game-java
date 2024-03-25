@@ -25,4 +25,9 @@ public class DayJuryVotePhase implements IPhase {
     public PhasePosition getPhasePosition() {
         return position;
     }
+
+    @Override
+    public int getDuration() {
+        return 10;
+    }
 }

@@ -11,13 +11,10 @@ import java.util.stream.Collectors;
 @Getter
 public class PhaseTree {
     private final PhaseTreeNode head;
-    private PhaseTreeNode current;
 
     private PhaseTree(PhaseTreeNode head) {
         this.head = head;
-        this.current = head;
     }
-
 
     private static PhaseTreeNode parse(Collection<IPhase> phases) throws MalformedPluginData {
         return parseIsolated(phases).get(0);

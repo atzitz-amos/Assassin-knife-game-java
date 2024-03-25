@@ -7,9 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DayVotePhase implements IPhase {
-    private final PhasePosition position = new PhasePositionBuilder()
-            .after(NightPhase.class)
-            .build();
+    private final PhasePosition position = new PhasePositionBuilder().after(NightPhase.class).build();
 
     @Override
     public String getId() {
@@ -24,5 +22,11 @@ public class DayVotePhase implements IPhase {
     @Override
     public PhasePosition getPhasePosition() {
         return position;
+    }
+
+
+    @Override
+    public int getDuration() {
+        return 10;
     }
 }

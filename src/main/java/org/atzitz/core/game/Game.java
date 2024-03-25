@@ -1,19 +1,24 @@
 package org.atzitz.core.game;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.atzitz.core.exceptions.MalformedPluginData;
+import org.atzitz.core.game.internal.GameData;
+import org.atzitz.core.game.internal.GameMessages;
 import org.atzitz.core.game.internal.GameTimer;
+import org.atzitz.core.game.internal.GameVotes;
 import org.atzitz.core.game.player.Player;
 import org.atzitz.core.plugin.PluginLoader;
-import org.atzitz.datatypes.constants.GamePhase;
+import org.atzitz.core.plugin.actions.IAction;
+import org.atzitz.core.plugin.context.InGameContext;
+import org.atzitz.datatypes.constants.ActionResult;
+import org.atzitz.datatypes.constants.GameState;
+import org.atzitz.datatypes.constants.GameTimerEventType;
 import org.atzitz.datatypes.users.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Getter
-@Setter
 public class Game {
     private final String name;
     private final PluginLoader plugins;
@@ -22,9 +27,12 @@ public class Game {
     private final Collection<Player> players;
     private final GameConfig gc;
 
-    private GamePhase phase = GamePhase.PHASE_BEGIN;
+    private GameState gameState = GameState.PHASE_BEGIN;
 
     private GameTimer timer;
+    private GameMessages messages;
+    private GameVotes votes;
+    private GameData data;
 
     // Game Init
 
@@ -42,13 +50,12 @@ public class Game {
 
     public Player join(User user) {
         return players.stream().filter(player -> player.getUser() == user).findFirst().orElseGet(() -> join(Player.of(user)));
-
     }
 
     public Player join(Player player) {
-        if (phase != GamePhase.PHASE_BEGIN) return null;
+        if (gameState != GameState.PHASE_BEGIN) return null;
         if (players.contains(player)) return player;
-        if (players.size() == gc.getMaxPlayers() - 1) phase = GamePhase.PHASE_AWAITING_READY;
+        if (players.size() == gc.getMaxPlayers() - 1) gameState = GameState.PHASE_AWAITING_READY;
 
         player.setGame(this);
         players.add(player);
@@ -57,12 +64,12 @@ public class Game {
     }
 
     public boolean setReady(Player player) {
-        if (phase != GamePhase.PHASE_AWAITING_READY) return false;
+        if (gameState != GameState.PHASE_AWAITING_READY) return false;
         if (player.isAuthor() || !players.contains(player)) return false;
 
         player.setReady(true);
         if (players.stream().filter(Player::isReady).count() == gc.getMaxPlayers() - 1) {
-            phase = GamePhase.PHASE_AWAITING_START;
+            gameState = GameState.PHASE_AWAITING_START;
         }
         return true;
     }
@@ -70,11 +77,37 @@ public class Game {
 
     // Game Functioning
     public boolean start() throws MalformedPluginData {
-        if (phase != GamePhase.PHASE_AWAITING_START) return false;
+        if (gameState != GameState.PHASE_AWAITING_START) return false;
 
         timer = new GameTimer(plugins.getPhases());
+        messages = new GameMessages();
+        votes = new GameVotes();
+        data = new GameData();
 
-        phase = GamePhase.PHASE_STARTED;
+        setupTimer();
+
+        gameState = GameState.PHASE_STARTED;
+
+        timer.start();
         return true;
+    }
+
+    private void setupTimer() {
+        timer.setupPhases();
+        timer.addPhaseHook(GameTimerEventType.PHASE_START, null, gameTimer -> handleNewPhase());
+    }
+
+    // Game Logic
+    private void handleNewPhase() {
+
+    }
+
+    public ActionResult play(IAction action, Player player) {
+
+        return ActionResult.SUCCESS;
+    }
+
+    private InGameContext createContext(Player player) {
+        return new InGameContext(this, player);
     }
 }

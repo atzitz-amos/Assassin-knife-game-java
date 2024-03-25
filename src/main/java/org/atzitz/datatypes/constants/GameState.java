@@ -1,6 +1,6 @@
 package org.atzitz.datatypes.constants;
 
-public enum GamePhase {
+public enum GameState {
     PHASE_BEGIN,
     PHASE_AWAITING_READY,
     PHASE_AWAITING_START,
