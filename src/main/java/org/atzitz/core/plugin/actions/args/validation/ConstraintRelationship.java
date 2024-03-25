@@ -1,4 +1,4 @@
-package org.atzitz.core.plugin.actions.args.constraints;
+package org.atzitz.core.plugin.actions.args.validation;
 
 public enum ConstraintRelationship {
     AND,

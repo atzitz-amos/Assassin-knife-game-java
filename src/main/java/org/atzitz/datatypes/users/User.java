@@ -1,4 +1,4 @@
 package org.atzitz.datatypes.users;
 
-public record User(String name) {
+public record User(String name, String id) {
 }

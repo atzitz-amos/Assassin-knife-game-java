@@ -9,4 +9,8 @@ public abstract class AbstractRole extends ActionsHandler {
     public abstract String getKeyPath();
 
     public abstract Class<? extends ITeam> getTeam();
+
+    public boolean is(Class<? extends AbstractRole> role) {
+        return role.isInstance(this);
+    };
 }
