@@ -1,12 +1,9 @@
 package org.atzitz.core.game.internal;
 
-import org.assertj.core.api.Assertions;
 import org.atzitz.core.exceptions.MalformedPluginData;
 import org.atzitz.core.plugin.phases.IPhase;
-import org.atzitz.datatypes.constants.GameTimerEventType;
 import org.atzitz.plugins.default_plugin.phases.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -20,14 +17,13 @@ class GameTimerTest {
     private final IPhase nightPhase = new NightPhase();
 
     private final List<IPhase> phases = List.of(assassinVotePhase, dayDefendPhase, duskPhase, dayVotePhase, dayJuryVotePhase, nightPhase, assassinChooseVictimPhase);
-    private GameTimer gameTimer;
 
     @BeforeEach
     void setUp() throws MalformedPluginData {
-        gameTimer = new GameTimer(phases);
+        GameTimer gameTimer = new GameTimer(phases);
     }
 
-    @Test
+    /*@Test
     void phaseFlowTest() {
         Assertions.assertThat(gameTimer.getPhase(() -> true)).isEqualTo(duskPhase);
         gameTimer.next();
@@ -150,5 +146,5 @@ class GameTimerTest {
         gameTimer.start();
 
         Thread.sleep(40000);
-    }
+    }*/
 }

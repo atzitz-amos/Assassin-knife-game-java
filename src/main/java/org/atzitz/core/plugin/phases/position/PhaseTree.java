@@ -20,40 +20,44 @@ public class PhaseTree {
         return parseIsolated(phases).get(0);
     }
 
-    private static List<PhaseTreeNode> parseIsolated(Collection<IPhase> phases) throws MalformedPluginData {
+    private static List<PhaseTreeNode> parseIsolated(Collection<IPhase> phases) {
         PhaseTreeNode root = new PhaseTreeNode(null);
-        Map<Class<? extends IPhase>, PhaseTreeNode> nodeMap = phases.stream().collect(Collectors.toMap(IPhase::getClass, PhaseTreeNode::new));
+        Map<Class<? extends IPhase>, PhaseTreeNode> nodeMap = phases.stream()
+                .collect(Collectors.toMap(IPhase::getClass, PhaseTreeNode::new));
         Map<Class<? extends IPhase>, Collection<IPhase>> duringMap = new HashMap<>();
 
         phases.forEach(phase -> {
             PhasePosition position = phase.getPhasePosition();
-            if (nodeMap.containsKey(position.getDuring())) {
-                if (!duringMap.containsKey(position.getDuring())) {
-                    duringMap.put(position.getDuring(), new ArrayList<>());
+            if (nodeMap.containsKey(position.during())) {
+                if (!duringMap.containsKey(position.during())) {
+                    duringMap.put(position.during(), new ArrayList<>());
                 }
-                duringMap.get(position.getDuring()).add(phase);
+                duringMap.get(position.during()).add(phase);
                 nodeMap.remove(phase.getClass());
             } else if (position.isFirst()) {
                 delegate(root, nodeMap.get(phase.getClass()), p -> p.getPhasePosition().isFirst());
-            } else if (position.getAfter() != null) {
-                delegate(nodeMap.get(position.getAfter()), nodeMap.get(phase.getClass()), p -> p.getPhasePosition().getAfter() == position.getAfter());
+            } else if (position.after() != null) {
+                delegate(nodeMap.get(position.after()), nodeMap.get(phase.getClass()), p -> p.getPhasePosition()
+                        .after() == position.after());
             }
         });
 
         duringMap.forEach((k, v) -> {
-            try {
-                nodeMap.get(k).setSideNodes(parseIsolated(v));
-            } catch (MalformedPluginData e) {
-                throw new RuntimeException(e);
-            }
+            nodeMap.get(k).setSideNodes(parseIsolated(v));
         });
 
-        return nodeMap.values().stream().filter(node -> node.getBefore() == null || node.getBefore().getPhase() == null).toList();
+        return nodeMap.values()
+                .stream()
+                .filter(node -> node.getBefore() == null || node.getBefore().getPhase() == null)
+                .toList();
     }
 
     private static void delegate(PhaseTreeNode root, PhaseTreeNode node, Predicate<IPhase> predicate) {
         PhaseTreeNode current = root;
-        while (current.getNext() != null && predicate.test(current.getNext().getPhase()) && current.getNext().getPhase().getPhasePosition().getPriority() >= node.getPhase().getPhasePosition().getPriority()) {
+        while (current.getNext() != null && predicate.test(current.getNext().getPhase()) && current.getNext()
+                .getPhase()
+                .getPhasePosition()
+                .priority() >= node.getPhase().getPhasePosition().priority()) {
             current = current.getNext();
         }
         PhaseTreeNode item = node;

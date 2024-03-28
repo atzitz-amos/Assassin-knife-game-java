@@ -67,7 +67,7 @@ public class GameTimer {
                 phaseHooks.get(GameTimerEventType.TURN_BEGIN).get(null).forEach(h -> h.accept(this));
             }
         }
-        if (current.getPhasePosition().isFirstNightOnly() && !firstNight || current.getPhasePosition().isFirstTurnOnly() && !firstTurn)
+        if (current.getPhasePosition().firstNightOnly() && !firstNight || current.getPhasePosition().firstTurnOnly() && !firstTurn)
             next();
 
         if (phaseHooks.containsKey(GameTimerEventType.PHASE_START))

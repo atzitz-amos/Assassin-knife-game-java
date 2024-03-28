@@ -13,7 +13,7 @@ public class GameFactory {
     public Game newGame(String name) {
         return new Game(
                 name,
-                new User("me"),
+                new User("me", "Me"),
                 new GameConfigBuilder().setMaxPlayers(4).build(),
                 plugins
         );

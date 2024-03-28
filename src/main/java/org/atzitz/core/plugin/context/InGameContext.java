@@ -1,52 +1,38 @@
 package org.atzitz.core.plugin.context;
 
 import org.atzitz.core.game.Game;
-import org.atzitz.core.game.internal.GameData;
-import org.atzitz.core.game.internal.GameMessages;
-import org.atzitz.core.game.internal.GameTimer;
-import org.atzitz.core.game.internal.GameVotes;
+import org.atzitz.core.game.internal.*;
 import org.atzitz.core.game.player.Player;
 import org.atzitz.core.plugin.phases.IPhase;
 import org.atzitz.datatypes.constants.GameState;
 
-public class InGameContext implements IContext {
-    private final Game _game;
-    private final Player _player;
+public class InGameContext {
+    public final Game game;
+    public final Player player;
+
+    public final GameVotes votes;
+    public final GameTimer timer;
+    public final GameData data;
+    public final GameMessages messages;
+
+    public final PlayerPool players;
+
+    public final IPhase currentPhase;
+    public final GameState gameState;
+
 
     public InGameContext(Game game, Player player) {
-        this._game = game;
-        this._player = player;
-    }
+        this.game = game;
+        this.player = player;
 
-    public Game game() {
-        return _game;
-    }
+        this.players = game.getPlayers();
 
-    public GameVotes votes() {
-        return _game.getVotes();
-    }
+        this.votes = game.getVotes();
+        this.timer = game.getTimer();
+        this.data = game.getData();
+        this.messages = game.getMessages();
 
-    public GameMessages messages() {
-        return _game.getMessages();
-    }
-
-    public GameTimer timer() {
-        return _game.getTimer();
-    }
-
-    public GameData data() {
-        return _game.getData();
-    }
-
-    public IPhase phase() {
-        return _game.getTimer().getPhase(this);
-    }
-
-    public Player player() {
-        return _player;
-    }
-
-    public GameState gameState() {
-        return _game.getGameState();
+        this.currentPhase = timer.getPhase(this);
+        this.gameState = game.getGameState();
     }
 }
