@@ -2,10 +2,15 @@ package org.atzitz.core.game;
 
 import lombok.Getter;
 import org.atzitz.core.exceptions.MalformedPluginData;
-import org.atzitz.core.game.internal.*;
+import org.atzitz.core.game.internal.GameData;
+import org.atzitz.core.game.internal.GameTimer;
+import org.atzitz.core.game.internal.GameVotes;
+import org.atzitz.core.game.internal.PlayerPool;
+import org.atzitz.core.game.internal.messages.GameMessages;
 import org.atzitz.core.game.player.Player;
 import org.atzitz.core.plugin.PluginLoader;
 import org.atzitz.core.plugin.actions.AbstractAction;
+import org.atzitz.core.plugin.context.GlobalStateContext;
 import org.atzitz.core.plugin.context.InGameContext;
 import org.atzitz.datatypes.constants.ActionResult;
 import org.atzitz.datatypes.constants.GameState;
@@ -86,9 +91,10 @@ public class Game {
     }
 
     private void setupTimer() {
-        timer.setupPhases();
+        timer.setupPhases(this::createGlobalStateContext);
         timer.addPhaseHook(GameTimerEventType.PHASE_START, null, gameTimer -> handleNewPhase());
     }
+
 
     // Game Logic
     private void handleNewPhase() {
@@ -96,11 +102,14 @@ public class Game {
     }
 
     public ActionResult play(AbstractAction action, Player player) {
-
         return ActionResult.SUCCESS;
     }
 
     private InGameContext createContext(Player player) {
         return new InGameContext(this, player);
+    }
+
+    private GlobalStateContext createGlobalStateContext() {
+        return new GlobalStateContext(this);
     }
 }

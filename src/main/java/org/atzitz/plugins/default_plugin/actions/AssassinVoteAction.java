@@ -28,7 +28,7 @@ public class AssassinVoteAction extends AbstractAction {
                 .ensure(Constraints.isRole(AssassinRole.class))
                 .collect();
         System.out.println("Found player " + player.getUser().name());
-        return null;
+        return ActionResult.SUCCESS;
     }
 
 }

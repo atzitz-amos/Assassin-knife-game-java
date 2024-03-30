@@ -12,12 +12,9 @@ public class RoleConstraint implements IConstraint<Player> {
     public RoleConstraint(Class<? extends AbstractRole> role) {
         this.role = role;
     }
-    
+
     @Override
-    public void validate(InGameContext ctx, Player value) throws ArgumentConstraintFailure {
-        if (value.getRole().is(role)) {
-            return;
-        }
-        throw new ArgumentConstraintFailure(this);
+    public boolean validate(InGameContext ctx, Player value) throws ArgumentConstraintFailure {
+        return value.getRole().is(role);
     }
 }

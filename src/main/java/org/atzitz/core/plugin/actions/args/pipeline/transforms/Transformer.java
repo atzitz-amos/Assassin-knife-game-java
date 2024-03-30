@@ -19,6 +19,10 @@ public class Transformer<IN, OUT> extends AbstractPipeline<IN, OUT> {
     @Override
     @NotNull
     protected OUT transformTo() throws ArgumentTransformerFailure {
-        return transformer.transform(ctx, value);
+        try {
+            return transformer.transform(ctx, value);
+        } catch (Exception e) {
+            throw new ArgumentTransformerFailure(e);
+        }
     }
 }

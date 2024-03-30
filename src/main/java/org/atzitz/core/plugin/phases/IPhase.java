@@ -1,6 +1,6 @@
 package org.atzitz.core.plugin.phases;
 
-import org.atzitz.core.game.internal.GameTimer;
+import org.atzitz.core.plugin.context.GlobalStateContext;
 import org.atzitz.core.plugin.context.InGameContext;
 import org.atzitz.core.plugin.phases.position.PhasePosition;
 
@@ -26,12 +26,12 @@ public interface IPhase {
 
     int getDuration();
 
-    default void phaseHookBegin(GameTimer gameTimer) {
+    default void phaseHookBegin(GlobalStateContext ctx) {
     }
 
-    default void phaseHookEnd(GameTimer gameTimer) {
+    default void phaseHookEnd(GlobalStateContext ctx) {
     }
 
-    default void phaseHookTick(GameTimer gameTimer) {
+    default void phaseHookTick(GlobalStateContext ctx) {
     }
 }

@@ -13,8 +13,11 @@ public class Player implements IPlayer {
     private final User user;
     private final Game game;
     private final boolean isAuthor;
+
     private @Setter AbstractRole role = null;
     private @Setter boolean isReady;
+
+    private @Setter boolean alive = true;
 
     public static Player of(User user, Game game) {
         return new Player(user, game, false);
@@ -24,4 +27,5 @@ public class Player implements IPlayer {
     public String getId() {
         return user.id();
     }
+
 }

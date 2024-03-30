@@ -1,0 +1,46 @@
+{
+  "messages": {
+    "user": {
+      "joined": "**{username}** a rejoint la partie.",
+      "leaved": "**{username}** a quitté la partie.",
+      "ready": "**{username}** est prêt!",
+      "removed_ready": "**{username}** n'est plus prêt!"
+    },
+    "game": {
+      "waiting_start": "Tout les joueurs sont prêt... En attente du lancement par le créateur..."
+    },
+    "phase": {
+      "init_dusk": "La nuit est sur le point de tomber... Il est temps de choisir si vous souhaiter rester en sécurité ou bien sortir affronter le froid...",
+      "init_night": "La nuit étend désormais son épais manteau.",
+      "init_day_vote": "Il est désormais temps de délibrer et d'accuser les assassins...",
+      "init_day_defend": "Le procureur et l'accusé peuvent désormais défendre leur point de vue.",
+      "init_day_jury_vote": "Jury...! Coupable ou innocent?"
+    },
+    "role": {
+      "explanation_assassin": "Vous êtes **Assassin**.",
+      "explanation_villager": "Vous êtes **Villageois**."
+    },
+    "explanation": {
+      "assassin_vote": "Assassins, il est temps de choisir l'un d'entre vous qui aura la lourde tâche d'executer la mission..."
+    },
+    "victim": {
+      "assassin": "Le jour se lève... Mais pas pour tout le monde... **{username}** ne verra plus jamais la lumière du soleil! Il était **{role}**",
+      "jury": "Et le jury s'est décidé... L'accusé est déclaré **{jury_status}**! **{username}** sera donc pendu! Il était **{role}**."
+    },
+    "designation": {
+      "assassin_choose_victim": "**{username}** tu as été choisi par les tiens pour assassiner la personne de ton choix... Choisis bien...!",
+      "assassin_chose_victim": "**{username}** a décider d'assassiner **{victim}**.",
+      "accused": "Après le vote du village, **{username}** a été **accusé**, il doit maintenant défendre sa cause.",
+      "procurator": "**{username}** a été choisi pour représenter les accusés! Il sera donc le **Procureur**! Il doit défendre sa cause à tout prix car sinon il périra à la place de l'accusé."
+    },
+    "vote": {
+      "assassin": "**{u1}** pense que **{u2}** est prometteur...",
+      "day": "**{u1}** pense que **{u2}** n'est pas si innocent que ça!",
+      "jury": "D'après **{username}**, l'accusé est **{jury_status}**"
+    },
+    "victory": {
+      "assassin": "Les Assassins ont gagnés !",
+      "village": "Les Villageois ont gagnés !"
+    }
+  }
+}

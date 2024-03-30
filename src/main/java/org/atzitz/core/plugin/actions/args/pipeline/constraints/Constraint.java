@@ -19,7 +19,9 @@ public class Constraint<T> extends AbstractPipeline<T, T> {
 
     @Override
     public T transformTo() throws ArgumentConstraintFailure {
-        constraint.validate(ctx, value);
+        if (!constraint.validate(ctx, value)) {
+            throw new ArgumentConstraintFailure(constraint);
+        }
         return value;
     }
 }

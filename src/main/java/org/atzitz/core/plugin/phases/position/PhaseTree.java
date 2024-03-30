@@ -16,7 +16,7 @@ public class PhaseTree {
         this.head = head;
     }
 
-    private static PhaseTreeNode parse(Collection<IPhase> phases) throws MalformedPluginData {
+    private static PhaseTreeNode parse(Collection<IPhase> phases) {
         return parseIsolated(phases).get(0);
     }
 
@@ -42,9 +42,7 @@ public class PhaseTree {
             }
         });
 
-        duringMap.forEach((k, v) -> {
-            nodeMap.get(k).setSideNodes(parseIsolated(v));
-        });
+        duringMap.forEach((k, v) -> nodeMap.get(k).setSideNodes(parseIsolated(v)));
 
         return nodeMap.values()
                 .stream()

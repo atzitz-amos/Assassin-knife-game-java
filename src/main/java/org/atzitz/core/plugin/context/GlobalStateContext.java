@@ -3,13 +3,11 @@ package org.atzitz.core.plugin.context;
 import org.atzitz.core.game.Game;
 import org.atzitz.core.game.internal.*;
 import org.atzitz.core.game.internal.messages.GameMessages;
-import org.atzitz.core.game.player.Player;
 import org.atzitz.core.plugin.phases.IPhase;
 import org.atzitz.datatypes.constants.GameState;
 
-public class InGameContext {
+public class GlobalStateContext {
     public final Game game;
-    public final Player player;
 
     public final GameVotes votes;
     public final GameTimer timer;
@@ -21,17 +19,14 @@ public class InGameContext {
     public final IPhase currentPhase;
     public final GameState gameState;
 
-
-    public InGameContext(Game game, Player player) {
+    public GlobalStateContext(Game game) {
         this.game = game;
-        this.player = player;
-
-        this.players = game.getPlayers();
 
         this.votes = game.getVotes();
         this.timer = game.getTimer();
         this.data = game.getData();
         this.messages = game.getMessages();
+        this.players = game.getPlayers();
 
         this.currentPhase = timer.getPhase(this);
         this.gameState = game.getGameState();
